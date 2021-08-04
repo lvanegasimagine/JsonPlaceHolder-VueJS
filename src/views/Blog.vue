@@ -1,0 +1,37 @@
+<template>
+  <Titulo texto="Titulo de mi blog"/>
+  <!-- <button @click=consumirApi>consumir api</button> -->
+  <div v-for="item in arrayBlog" :key="item.id">
+    <router-link :to="`/blog/${item.id}`">{{ item.title }}</router-link>
+  </div>
+</template>
+
+<script>
+import Titulo from '../components/Titulo.vue'
+
+export default {
+    components: {
+        Titulo
+    },
+    data() {
+      return {
+        arrayBlog: []
+      }
+    },
+    methods: {
+      async consumirApi(){
+        const data = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const array = await data.json();
+        this.arrayBlog = array;
+        console.log(this.arrayBlog)
+      }
+    },
+    created() {
+        this.consumirApi();
+    }
+}
+</script>
+
+<style>
+
+</style>
